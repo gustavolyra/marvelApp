@@ -1,48 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import api from './services/api';
 import { FlatList } from 'react-native-gesture-handler';
+import HeroesList from './components/HeroesList';
 
 export default function Heroes() {
   const [heroes, setHeroes] = useState([]);
+  const [offset, setOffset] = useState(0);
   const [page, setPage] = useState(0);
 
+  const getHeroes = async () => {
+    const apiKey = '';
+    const response = await api.get(
+      `characters?apiKey=${apiKey}&orderBy=name&limit=20&offset=${offset}`
+    );
+    const data = response.data;
+    setHeroes(data.results);
+    console.log(data);
+    setOffset(0);
+  };
+
   useEffect(() => {
-    const getHeroes = async () => {
-      const apiKey = '';
-      // const response = await api.get(`characters?apiKey=${apiKey}&orderBy=name&limit=20&offset=${page}`);
-      const response = await api.get(`?page=${page}&results=20`);
-      const data = response.data;
-      setHeroes(data);
-      console.log(data);
-      setPage(0);
-    };
+    getHeroes();
   }, []);
 
-  const handleHeroInfo = async (id) => {};
+  const handleChangePage = (newPage) => {
+    setPage(newPage);
+    setOffset(newPage * 20);
+    getHeroes();
+  };
 
   return (
     <>
-      <SafeAreaView style={styles.container}>
-        {/* <FlatList
-          data={heros}
-          keyExtractor={heros.Character.id}
-          renderItem={(hero) => (
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => handleHeroInfo(hero.Character.id)}
-            >
-              <View style={styles.heroContainer}>
-                <Image
-                  source={hero.Image.path}
-                  style={styles.imageHeroLogo}
-                ></Image>
-                <Text style={styles.hero}>{hero.Character.name}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        ></FlatList> */}
-      </SafeAreaView>
+      <Text>Heroes</Text>
+      <HeroesList
+        heroes={heroes}
+        page={page}
+        changePage={handleChangePage}
+      ></HeroesList>
     </>
   );
 }
