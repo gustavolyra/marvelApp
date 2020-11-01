@@ -24,13 +24,13 @@ export default function App() {
         <Tab.Screen
           name="Heroes"
           component={Heroes}
-          options={{ tabBarLabel: 'Heroes' }}
+          options={{ tabBarLabel: 'Super-heróis' }}
         />
 
         <Tab.Screen
           name="QR Scanner"
           component={QrCode}
-          options={{ tabBarLabel: 'QR Scanner' }}
+          options={{ tabBarLabel: 'QRCode' }}
         />
       </Tab.Navigator>
     </NavigationContainer>
