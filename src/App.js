@@ -4,7 +4,6 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Home from './Home';
 import Heroes from './Heroes';
 import QrCode from './QrCode';
-import QRCodeScanner from './QRCodeScanner';
 const Tab = createMaterialTopTabNavigator();
 
 export default function App() {
@@ -30,7 +29,7 @@ export default function App() {
 
         <Tab.Screen
           name="QR Scanner"
-          component={QRCodeScanner}
+          component={QrCode}
           options={{ tabBarLabel: 'QR Scanner' }}
         />
       </Tab.Navigator>
